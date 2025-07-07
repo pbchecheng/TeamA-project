@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.Account;
 import com.example.demo.repository.UserRepository;
 
 @Controller
@@ -24,6 +23,9 @@ public class UserController {
 
 	@Autowired
 	HttpSession session;
+
+	@Autowired
+	Account account;
 
 	@Autowired
 	UserRepository userRepository;
@@ -37,15 +39,18 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(
 			@RequestParam(name = "name", defaultValue = "") String name,
+			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
 			Model model) {
 
-		List<User> users = userRepository.findByNameAndPassword(name, password);
+		List<User> users = userRepository.findByEmailAndPassword(email, password);
 
 		if (users.size() == 0) {
-			model.addAttribute("message", "名前とパスワードが一致しませんでした");
+			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
 			return "login";
 		} else {
+			account.setName(name);
+
 			return "redirect:/shokumane/items";
 		}
 
@@ -64,7 +69,8 @@ public class UserController {
 			@RequestParam(name = "name", defaultValue = "") String name,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
-			@RequestParam(name = "password_confirm", defaultValue = "") String password_confirm) {
+			@RequestParam(name = "password_confirm", defaultValue = "") String password_confirm,
+			Model model) {
 		List<String> errorList = new ArrayList<>();
 
 		if (name.length() == 0) {
@@ -84,14 +90,22 @@ public class UserController {
 			errorList.add("パスワードは必須です");
 		}
 
+		if (password_confirm.length() == 0) {
+			errorList.add("確認パスワードは必須です");
+		}
+
+		if (!password_confirm.equals(password) && password.length() != 0 && password_confirm.length() != 0) {
+			errorList.add("パスワードと確認パスワードは一致していません");
+		}
+
 		if (errorList.size() > 0) {
 			model.addAttribute("error", errorList);
 			return "signup";
 		}
 
-		Customer customer = new Customer(name, address, tel, email, password);
-		customerRepository.save(customer);
-		return "signup";
+		User user = new User(name, email, password);
+		userRepository.save(user);
+		return "login";
 	}
 
 }

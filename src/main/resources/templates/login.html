@@ -13,7 +13,10 @@
 	
 	
 	<form action="/shokumane/login" method="post">
+		<input type="text" name="email" placeholder="メールアドレス">
+		<input type="password" name="password" placeholder="パスワード">
 		<button>ログイン</button>
+		<br><span th:text="${message}" style="color: red;"></span>
 	</form>
 	
 	<form action="/shokumane/signup" method="get">
