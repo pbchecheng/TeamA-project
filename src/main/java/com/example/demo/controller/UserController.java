@@ -38,7 +38,6 @@ public class UserController {
 
 	@PostMapping("/login")
 	public String login(
-			@RequestParam(name = "name", defaultValue = "") String name,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "password", defaultValue = "") String password,
 			Model model) {
@@ -49,6 +48,7 @@ public class UserController {
 			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
 			return "login";
 		} else {
+			String name = users.get(0).getName();
 			account.setName(name);
 
 			return "redirect:/shokumane/items";
