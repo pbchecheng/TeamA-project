@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+<body>
+	
+	<header th:replace="header"></header>
+	
+    items
+	
+	<br><br>
+	
+	<!--	edit item1   -->
+	<form action="/shokumane/1/edit" method="get">
+		<button>更新</button>
+	</form>
+	<br>
+	<form action="/shokumane/1/consume" method="get">
+		<button>消費</button>
+	</form>
+	
+	<br>
+	<form action="/shokumane/add" method="get">
+		<button>品物を登録</button>
+	</form>
+	
+	<footer th:replace="footer"></footer>
+</body>
+</html>
