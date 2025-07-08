@@ -21,6 +21,8 @@ public class Food {
 	private Integer quantity;
 	private String memo;
 	private LocalDate timelimit;
+	@Column(name = "user_id")
+	private Integer userId;
 
 	public Food() {
 
@@ -76,6 +78,14 @@ public class Food {
 
 	public void setTimelimit(LocalDate timelimit) {
 		this.timelimit = timelimit;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

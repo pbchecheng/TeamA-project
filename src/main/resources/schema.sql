@@ -20,7 +20,8 @@ CREATE TABLE food
    foodname TEXT,
    quantity INTEGER,
    memo TEXT,
-   timelimit DATE
+   timelimit DATE,
+   user_id INTEGER
 );
 
 -- 顧客テーブル
@@ -40,7 +41,8 @@ select
     shoku.foodname,
     shoku.quantity,
     shoku.memo,
-    shoku.timelimit
+    shoku.timelimit,
+    shoku.user_id
 from
     food shoku
 left outer join

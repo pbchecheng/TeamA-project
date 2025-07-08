@@ -22,6 +22,8 @@ public class Item {
 	private Integer quantity;
 	private String memo;
 	private LocalDate timelimit;
+	@Column(name = "user_id")
+	private Integer userId;
 
 	public Item() {
 
@@ -85,6 +87,14 @@ public class Item {
 
 	public void setTimelimit(LocalDate timelimit) {
 		this.timelimit = timelimit;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }

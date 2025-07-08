@@ -12,4 +12,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	List<Item> findAllByOrderById();
 
+	List<Item> findByUserIdOrderById(int id);
+
+	List<Item> findByUserIdAndCategoryId(int id, Integer categoryId);
+
 }

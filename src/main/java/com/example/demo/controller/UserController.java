@@ -50,6 +50,8 @@ public class UserController {
 		} else {
 			String name = users.get(0).getName();
 			account.setName(name);
+			Integer id = users.get(0).getId();
+			account.setId(id);
 
 			return "redirect:/shokumane/items";
 		}

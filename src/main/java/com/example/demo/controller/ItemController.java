@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Food;
 import com.example.demo.entity.Item;
+import com.example.demo.model.Account;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.FoodRepository;
 import com.example.demo.repository.ItemRepository;
@@ -23,6 +24,9 @@ import com.example.demo.repository.ItemRepository;
 @Controller
 @RequestMapping("/shokumane")
 public class ItemController {
+
+	@Autowired
+	Account account;
 
 	@Autowired
 	CategoryRepository categoryRepository;
@@ -45,11 +49,11 @@ public class ItemController {
 
 		if (categoryId == null) {
 
-			itemList = itemRepository.findAllByOrderById();
+			itemList = itemRepository.findByUserIdOrderById(account.getId());
 
 		} else {
 			// itemsテーブルをカテゴリーIDを指定して一覧を取得
-			itemList = itemRepository.findByCategoryId(categoryId);
+			itemList = itemRepository.findByUserIdAndCategoryId(account.getId(), categoryId);
 		}
 		model.addAttribute("items", itemList);
 		return "items";
@@ -93,6 +97,7 @@ public class ItemController {
 		}
 
 		Food food = new Food(foodName, categoryId, quantity, memo, timeLimit);
+		food.setUserId(account.getId());
 		foodRepository.save(food);
 
 		return "redirect:/shokumane/items";
