@@ -8,18 +8,43 @@
 	
 	<header th:replace="header"></header>
 	
-    items
+	<a href="/shokumane/items">全食品</a>
+			<a th:each="category:${categories}"
+		       th:href="@{/shokumane/items(categoryId=${category.id})}"
+		       th:text="${category.name}"
+		       style="margin-right: 5px;"></a>
 	
-	<br><br>
-	
-	<!--	edit item1   -->
-	<form action="/shokumane/1/edit" method="get">
-		<button>更新</button>
-	</form>
 	<br>
-	<form action="/shokumane/1/consume" method="get">
-		<button>消費</button>
-	</form>
+	
+	<table border="1">
+				<tr>
+					<th>食品名</th>
+					<th>カテゴリー名</th>
+					<th>数量</th>
+					<th>memo</th>
+					<th>消費・賞味期限</th>
+					<th>更新</th>
+					<th>消費</th>
+				</tr>
+				<tr th:each="item:${items}">
+					<td th:text="${item.foodname}"></td>
+					<td th:text="${item.categoryname}"></td>
+					<td th:text="${item.quantity}"></td>
+					<td th:text="${item.memo}"></td>
+					<td th:text="${item.timelimit}"></td>
+					<td>
+						<form th:action="@{/shokumane/{id}/edit(id=${item.id})}" method="get">
+							<button>更新</button>
+						</form>
+					</td>
+					<td>
+						<form th:action="@{/shokumane/{id}/consume(id=${item.id})}" method="get">
+								<button>消費</button>
+							</form>
+											
+					</td>
+				</tr>
+			</table>
 	
 	<br>
 	<form action="/shokumane/add" method="get">

@@ -1,6 +1,7 @@
 -- 各種テーブル削除
-DROP TABLE IF EXISTS categories;
+Drop VIEW IF EXISTS v_food;
 DROP TABLE IF EXISTS food;
+DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS users;
 
 
@@ -18,6 +19,7 @@ CREATE TABLE food
    category_id INTEGER,
    foodname TEXT,
    quantity INTEGER,
+   memo TEXT,
    timelimit DATE
 );
 
@@ -29,3 +31,19 @@ CREATE TABLE users
    email TEXT,
    password TEXT
 );
+
+CREATE VIEW v_food AS
+select
+    shoku.id,
+    cat.id as category_id,
+    cat.name as categoryname,
+    shoku.foodname,
+    shoku.quantity,
+    shoku.memo,
+    shoku.timelimit
+from
+    food shoku
+left outer join
+    categories cat
+on 
+    shoku.category_id=cat.id

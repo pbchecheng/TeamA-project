@@ -9,11 +9,26 @@
 	<header th:replace="header"></header>
 	
 	<h2>食品新規登録</h2>
+	<ul th:if="${error}">
+		<p th:each="errormsg:${error}" th:text="${errormsg}" style="color: red;"></p>
+	</ul>
 	
 	<form action="/shokumane/add" method="post">
+		食品名： <span style="color: red;"> * </span> <input type="text" name="foodName"><br>
+		カテゴリー:
+			<select name="categoryId">
+			<option 
+			th:each="category:${categories}"
+			th:text="${category.name}"
+			th:value="${category.id}">
+			</option>
+			</select><br>
+		数量：<span style="color: red;"> * </span> <input type="number" name="quantity"><br>
+		memo: 
+		<br><textarea name="memo" row="4" column="10"></textarea>
+		<br>消費・賞味期限:<input type="date" name="timeLimit"><br>
 		<button>登録</button>
 	</form>
-	
 	<footer th:replace="footer"></footer>
 </body>
 </html>
