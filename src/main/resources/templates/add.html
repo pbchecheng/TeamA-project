@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>title</title>
-</head>et
+</head>
 <body>
 	
 	<header th:replace="header"></header>
@@ -24,6 +24,14 @@
 			</option>
 			</select><br>
 		数量：<span style="color: red;"> * </span> <input type="number" name="quantity"><br>
+		単位:
+			<select name="countId">
+			<option 
+			th:each="count:${counts}"
+			th:text="${count.name}"
+			th:value="${count.id}">
+			</option>
+			</select><br>
 		memo: 
 		<br><textarea name="memo" row="4" column="10"></textarea>
 		<br>消費・賞味期限:<input type="date" name="timeLimit"><br>

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,12 +17,22 @@ public class Food {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String foodname;
+	@Column(name = "foodname")
+	private String foodName;
 	@Column(name = "category_id")
 	private Integer categoryId;
+	@OneToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
+	private Category category;
 	private Integer quantity;
+	@Column(name = "count_id")
+	private Integer countId;
+	@OneToOne
+	@JoinColumn(name = "count_id", referencedColumnName = "id", insertable = false, updatable = false)
+	private Count count;
 	private String memo;
-	private LocalDate timelimit;
+	@Column(name = "timelimit")
+	private LocalDate timeLimit;
 	@Column(name = "user_id")
 	private Integer userId;
 
@@ -28,24 +40,25 @@ public class Food {
 
 	}
 
-	public Food(String foodname, int categoryId, int quantity, String memo, LocalDate timelimit) {
-		this.foodname = foodname;
+	public Food(String foodName, int categoryId, int quantity, int countId, String memo, LocalDate timeLimit) {
+		this.foodName = foodName;
 		this.categoryId = categoryId;
 		this.quantity = quantity;
+		this.countId = countId;
 		this.memo = memo;
-		this.timelimit = timelimit;
+		this.timeLimit = timeLimit;
 	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public String getFoodname() {
-		return foodname;
+	public String getFoodName() {
+		return foodName;
 	}
 
-	public void setFoodname(String foodname) {
-		this.foodname = foodname;
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
 	}
 
 	public Integer getCategoryId() {
@@ -56,12 +69,28 @@ public class Food {
 		this.categoryId = categoryId;
 	}
 
+	public String getCategoryName() {
+		return category.getName();
+	}
+
 	public Integer getQuantity() {
 		return quantity;
 	}
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Integer getCountId() {
+		return countId;
+	}
+
+	public void setCountId(Integer countId) {
+		this.countId = countId;
+	}
+
+	public String getCountName() {
+		return count.getName();
 	}
 
 	public String getMemo() {
@@ -72,12 +101,12 @@ public class Food {
 		this.memo = memo;
 	}
 
-	public LocalDate getTimelimit() {
-		return timelimit;
+	public LocalDate getTimeLimit() {
+		return timeLimit;
 	}
 
-	public void setTimelimit(LocalDate timelimit) {
-		this.timelimit = timelimit;
+	public void setTimeLimit(LocalDate timeLimit) {
+		this.timeLimit = timeLimit;
 	}
 
 	public Integer getUserId() {

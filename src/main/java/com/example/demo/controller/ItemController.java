@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Category;
+import com.example.demo.entity.Count;
 import com.example.demo.entity.Food;
-import com.example.demo.entity.Item;
 import com.example.demo.model.Account;
 import com.example.demo.repository.CategoryRepository;
+import com.example.demo.repository.CountRepository;
 import com.example.demo.repository.FoodRepository;
-import com.example.demo.repository.ItemRepository;
 
 @Controller
 @RequestMapping("/shokumane")
@@ -32,7 +32,7 @@ public class ItemController {
 	CategoryRepository categoryRepository;
 
 	@Autowired
-	ItemRepository itemRepository;
+	CountRepository countRepository;
 
 	@Autowired
 	FoodRepository foodRepository;
@@ -45,17 +45,19 @@ public class ItemController {
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
 
-		List<Item> itemList = null;
+		List<Food> foodList = null;
 
 		if (categoryId == null) {
 
-			itemList = itemRepository.findByUserIdOrderById(account.getId());
+			foodList = foodRepository.findByUserIdOrderById(account.getId());
 
 		} else {
 			// itemsテーブルをカテゴリーIDを指定して一覧を取得
-			itemList = itemRepository.findByUserIdAndCategoryId(account.getId(), categoryId);
+			foodList = foodRepository.findByUserIdAndCategoryId(account.getId(), categoryId);
+
 		}
-		model.addAttribute("items", itemList);
+
+		model.addAttribute("foods", foodList);
 		return "items";
 	}
 
@@ -63,6 +65,9 @@ public class ItemController {
 	public String add(Model model) {
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
+
+		List<Count> countList = countRepository.findAll();
+		model.addAttribute("counts", countList);
 
 		return "add";
 	}
@@ -72,6 +77,7 @@ public class ItemController {
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
 			@RequestParam(name = "foodName", defaultValue = "") String foodName,
 			@RequestParam(name = "quantity", defaultValue = "") Integer quantity,
+			@RequestParam(name = "countId", defaultValue = "") Integer countId,
 			@RequestParam(name = "memo", defaultValue = "") String memo,
 			@RequestParam(name = "timeLimit", defaultValue = "") LocalDate timeLimit,
 			Model model
@@ -92,11 +98,13 @@ public class ItemController {
 			model.addAttribute("error", errorList);
 			List<Category> categoryList = categoryRepository.findAll();
 			model.addAttribute("categories", categoryList);
+			List<Count> countList = countRepository.findAll();
+			model.addAttribute("counts", countList);
 			return "add";
 
 		}
 
-		Food food = new Food(foodName, categoryId, quantity, memo, timeLimit);
+		Food food = new Food(foodName, categoryId, quantity, countId, memo, timeLimit);
 		food.setUserId(account.getId());
 		foodRepository.save(food);
 
@@ -110,9 +118,12 @@ public class ItemController {
 
 		List<Category> categoryList = categoryRepository.findAll();
 		model.addAttribute("categories", categoryList);
+		List<Count> countList = countRepository.findAll();
+		model.addAttribute("counts", countList);
 
-		Item item = itemRepository.findById(id).get();
-		model.addAttribute("item", item);
+		Food food = foodRepository.findById(id).get();
+
+		model.addAttribute("food", food);
 
 		return "edit";
 	}
@@ -123,17 +134,19 @@ public class ItemController {
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
 			@RequestParam(name = "foodName", defaultValue = "") String foodName,
 			@RequestParam(name = "quantity", defaultValue = "") Integer quantity,
+			@RequestParam(name = "countId", defaultValue = "") Integer countId,
 			@RequestParam(name = "memo", defaultValue = "") String memo,
 			@RequestParam(name = "timeLimit", defaultValue = "") LocalDate timeLimit
 
 	) {
 
 		Food food = foodRepository.findById(id).get();
-		food.setFoodname(foodName);
+		food.setFoodName(foodName);
 		food.setCategoryId(categoryId);
 		food.setQuantity(quantity);
+		food.setCountId(countId);
 		food.setMemo(memo);
-		food.setTimelimit(timeLimit);
+		food.setTimeLimit(timeLimit);
 		foodRepository.save(food);
 
 		return "redirect:/shokumane/items";

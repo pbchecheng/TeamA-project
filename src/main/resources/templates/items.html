@@ -21,24 +21,26 @@
 					<th>食品名</th>
 					<th>カテゴリー名</th>
 					<th>数量</th>
+					<th>単位</th>
 					<th>memo</th>
 					<th>消費・賞味期限</th>
 					<th>更新</th>
 					<th>消費</th>
 				</tr>
-				<tr th:each="item:${items}">
-					<td th:text="${item.foodname}"></td>
-					<td th:text="${item.categoryname}"></td>
-					<td th:text="${item.quantity}"></td>
-					<td th:text="${item.memo}"></td>
-					<td th:text="${item.timelimit}"></td>
+				<tr th:each="food:${foods}">
+					<td th:text="${food.foodName}"></td>
+					<td th:text="${food.categoryName}"></td>
+					<td th:text="${food.quantity}"></td>
+					<td th:text="${food.countName}"></td>
+					<td th:text="${food.memo}"></td>
+					<td th:text="${food.timeLimit}"></td>
 					<td>
-						<form th:action="@{/shokumane/{id}/edit(id=${item.id})}" method="get">
+						<form th:action="@{/shokumane/{id}/edit(id=${food.id})}" method="get">
 							<button>更新</button>
 						</form>
 					</td>
 					<td>
-						<form th:action="@{/shokumane/{id}/consume(id=${item.id})}" method="get">
+						<form th:action="@{/shokumane/{id}/consume(id=${food.id})}" method="get">
 								<button>消費</button>
 							</form>
 											

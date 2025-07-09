@@ -2,6 +2,7 @@
 Drop VIEW IF EXISTS v_food;
 DROP TABLE IF EXISTS food;
 DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS counts;
 DROP TABLE IF EXISTS users;
 
 
@@ -12,17 +13,29 @@ CREATE TABLE categories
    name TEXT
 );
 
+-- 数量単位テーブル
+CREATE TABLE counts
+(
+   id SERIAL PRIMARY KEY,
+   name TEXT
+);
+
 -- 商品テーブル
 CREATE TABLE food
 (
    id SERIAL PRIMARY KEY,
    category_id INTEGER,
-   foodname TEXT,
+   FOREIGN KEY (category_id) REFERENCES categories(id),
+   foodName TEXT,
    quantity INTEGER,
+   count_id INTEGER,
+   FOREIGN KEY (count_id) REFERENCES counts(id),
    memo TEXT,
-   timelimit DATE,
+   timeLimit DATE,
    user_id INTEGER
 );
+
+
 
 -- 顧客テーブル
 CREATE TABLE users
@@ -32,20 +45,3 @@ CREATE TABLE users
    email TEXT,
    password TEXT
 );
-
-CREATE VIEW v_food AS
-select
-    shoku.id,
-    cat.id as category_id,
-    cat.name as categoryname,
-    shoku.foodname,
-    shoku.quantity,
-    shoku.memo,
-    shoku.timelimit,
-    shoku.user_id
-from
-    food shoku
-left outer join
-    categories cat
-on 
-    shoku.category_id=cat.id

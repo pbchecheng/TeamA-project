@@ -11,23 +11,30 @@
 	<h2>食品更新</h2>
 	
 	<form action="/shokumane/edit" method="post">
-		<p><input type="hidden" name="id" th:value="${item.id}"></p>
+		<p><input type="hidden" name="id" th:value="${food.id}"></p>
 			食品名： <span style="color: red;"> * </span> 
-			<input type="text" name="foodName" th:value="${item.foodname}"><br>
+			<input type="text" name="foodName" th:value="${food.foodName}"><br>
 			カテゴリー:
 				<select name="categoryId">
-				<option th:selected="${category.id}==${item.categoryId}"
+				<option th:selected="${category.id}==${food.categoryId}"
 				th:each="category:${categories}"
 				th:text="${category.name}"
 				th:value="${category.id}">
 				</option>
-			
 				</select><br>
 			数量：<span style="color: red;"> * </span> 
-			<input type="number" name="quantity" th:value="${item.quantity}"><br>
+			<input type="number" name="quantity" th:value="${food.quantity}"><br>
+			単位：
+				<select name="countId">
+				<option th:selected="${count.id}==${food.countId}"
+				th:each="count:${counts}"
+				th:text="${count.name}"
+				th:value="${count.id}">
+				</option>
+				</select><br>
 			memo: 
-			<br><textarea name="memo" row="4" column="10" >[[${item.memo}]]</textarea>
-			<br>消費・賞味期限:<input type="date" name="timeLimit" th:value="${item.timelimit}"><br>
+			<br><textarea name="memo" row="4" column="10" >[[${food.memo}]]</textarea>
+			<br>消費・賞味期限:<input type="date" name="timeLimit" th:value="${food.timeLimit}"><br>
 			<button>登録</button>
 		</form>
 	
