@@ -20,10 +20,18 @@
 			   	</div>
 				<br>
 	カテゴリー：<a href="/shokumane/items">全食品</a>
+		<th:block th:if="${asc}">
 			<a th:each="category:${categories}"
-		       th:href="@{/shokumane/items(categoryId=${category.id})}"
+		       th:href="@{/shokumane/items(categoryId=${category.id},asc='on')}"
 		       th:text="${category.name}"
 		       style="margin-right: 5px;"></a>
+	   </th:block>
+	   <th:block th:unless="${asc}">
+		   <a th:each="category:${categories}"
+		      th:href="@{/shokumane/items(categoryId=${category.id})}"
+		      th:text="${category.name}"
+		      style="margin-right: 5px;"></a>
+	   </th:block>
 			   
 			   <form id="sortForm" th:action="@{/shokumane/items}" method="get">
 			      <label>
