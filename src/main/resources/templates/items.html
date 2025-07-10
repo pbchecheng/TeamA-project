@@ -8,6 +8,13 @@
 	
 	
 	<header th:replace="header"></header>
+	
+<!--	確認メッセージ-->
+	  <div th:if="${successMessage}" class="alert alert-success">
+	    <span th:text="${successMessage}"></span>
+	  </div>
+	  
+<!--	  日付表示-->
 	<div id="current_date" style="color: red ;font-size:20px">
 			   	    <script>
 			   	        date = new Date();
@@ -18,13 +25,32 @@
 						"今日の日付：" + year + "-" + month + "-" + day;
 			   	    </script>
 			   	</div>
+				
+<!--				カテゴリー-->
 				<br>
-	カテゴリー：<a href="/shokumane/items">全食品</a>
-			<a th:each="category:${categories}"
-		       th:href="@{/shokumane/items(categoryId=${category.id})}"
-		       th:text="${category.name}"
-		       style="margin-right: 5px;"></a>
+				カテゴリー：
+				<th:block th:if="${asc}">
+					<a href="/shokumane/items?asc=on">全食品</a>
+				</th:block>
+				<th:block th:unless="${asc}">
+					<a href="/shokumane/items">全食品</a>		
+				</th:block>
+				<th:block th:if="${asc}">
+						
+						<a th:each="category:${categories}"
+						       th:href="@{/shokumane/items(categoryId=${category.id},asc='on')}"
+						       th:text="${category.name}"
+						       style="margin-right: 5px;"></a>
+				</th:block>
+				<th:block th:unless="${asc}">
+						<a th:each="category:${categories}"
+						      th:href="@{/shokumane/items(categoryId=${category.id})}"
+						      th:text="${category.name}"
+						      style="margin-right: 5px;"></a>
+				</th:block>
 			   
+<!--				消費・賞味期限昇順-->
+
 			   <form id="sortForm" th:action="@{/shokumane/items}" method="get">
 			      <label>
 					<input type="hidden" name="categoryId" th:value="${categoryId}">
@@ -33,14 +59,15 @@
 			        消費・賞味期限昇順
 			      </label>
 			    </form>
-				
+
+	<br>
+<!--				冷凍庫-->	
 	
-	<br>
-	<br>
+	<form id="batchForm" method="post">
 	<table border="1">
 		<caption>冷凍庫</caption>
-		
-					<tr>
+					<thead>
+					<tr><th><input type="checkbox" id="select-all"></th>
 						<th>食品名</th>
 						<th>カテゴリー名</th>
 						<th>数量</th>
@@ -49,8 +76,12 @@
 						<th>消費・賞味期限</th>
 						<th>更新</th>
 						<th>消費</th>
-					</tr>
+						</tr>
+					</thead>
+						
+					<tbody>
 					<tr th:each="food:${foods2}">
+						<td><input type="checkbox" class="row-checkbox" name="ids" th:value="${food.id}"></td>
 						<td th:text="${food.foodName}"></td>
 						<td th:text="${food.categoryName}"></td>
 						<td th:text="${food.quantity}"></td>
@@ -69,15 +100,51 @@
 												
 						</td>
 					</tr>
+					</tbody>
 				</table>
-	<br>
+	
+				<div id="action-buttons" hidden>
+				      <button type="submit" formaction="/shokumane/chillmove">冷蔵庫へ移動</button>
+				      <button type="submit" formaction="/shokumane/multidelete">消費</button>
+				    </div>
+	</form>		
+					<script>
+					    document.addEventListener("DOMContentLoaded", () => {
+					      const selectAll = document.getElementById("select-all");
+					      const rowCheckboxes = document.querySelectorAll(".row-checkbox");
+					      const actionButtons = document.getElementById("action-buttons");
+
+					      function updateButtons() {
+					        const anyChecked = [...rowCheckboxes].some(cb => cb.checked);
+					        if (anyChecked) {
+					          actionButtons.hidden = false;
+					        } else {
+					          actionButtons.hidden = true;
+					        }
+					        selectAll.checked = [...rowCheckboxes].every(cb => cb.checked);
+					      }
+
+					      selectAll.addEventListener("change", () => {
+					        rowCheckboxes.forEach(cb => cb.checked = selectAll.checked);
+					        updateButtons();
+					      });
+
+					      rowCheckboxes.forEach(cb => {
+					        cb.addEventListener("change", updateButtons);
+					      });
+					    });
+					  </script>		
+	  <br>
+	  
 	<form action="/shokumane/add" method="get">
 		<button  type="submit" name="action" value="2">冷凍庫に品物を登録</button>
 	</form>	
+	
 	<br>
 	<table border="1">
 		<caption>冷蔵庫</caption>
 				<tr>
+					<th><input type="checkbox"></th>
 					<th>食品名</th>
 					<th>カテゴリー名</th>
 					<th>数量</th>
@@ -88,6 +155,7 @@
 					<th>消費</th>
 				</tr>
 				<tr th:each="food:${foods1}">
+					<td><input type="checkbox"></td>
 					<td th:text="${food.foodName}"></td>
 					<td th:text="${food.categoryName}"></td>
 					<td th:text="${food.quantity}"></td>

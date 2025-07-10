@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Count;
@@ -60,7 +61,8 @@ public class ItemController {
 		}
 
 		if (asc) {
-			foodList.sort(Comparator.comparing(Food::getTimeLimit));
+			foodList.sort(Comparator.comparing(Food::getTimeLimit,
+					Comparator.nullsLast(Comparator.naturalOrder())));
 		}
 
 		List<Food> foodList1 = new ArrayList<>();
@@ -74,7 +76,7 @@ public class ItemController {
 			}
 
 		}
-		model.addAttribute("categoryId",categoryId);
+		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("foods1", foodList1);
 		model.addAttribute("foods2", foodList2);
 		model.addAttribute("asc", asc);
@@ -111,6 +113,7 @@ public class ItemController {
 			@RequestParam(name = "memo", defaultValue = "") String memo,
 			@RequestParam(name = "timeLimit", defaultValue = "") LocalDate timeLimit,
 			@RequestParam(name = "place", defaultValue = "") String place,
+			RedirectAttributes redirectAttrs,
 			Model model
 
 	) {
@@ -147,7 +150,7 @@ public class ItemController {
 
 		food.setUserId(account.getId());
 		foodRepository.save(food);
-
+		redirectAttrs.addFlashAttribute("successMessage", "品物を登録しました！");
 		return "redirect:/shokumane/items";
 
 	}
@@ -176,7 +179,8 @@ public class ItemController {
 			@RequestParam(name = "quantity", defaultValue = "") Integer quantity,
 			@RequestParam(name = "countId", defaultValue = "") Integer countId,
 			@RequestParam(name = "memo", defaultValue = "") String memo,
-			@RequestParam(name = "timeLimit", defaultValue = "") LocalDate timeLimit
+			@RequestParam(name = "timeLimit", defaultValue = "") LocalDate timeLimit,
+			RedirectAttributes redirectAttrs
 
 	) {
 
@@ -188,14 +192,26 @@ public class ItemController {
 		food.setMemo(memo);
 		food.setTimeLimit(timeLimit);
 		foodRepository.save(food);
+		redirectAttrs.addFlashAttribute("successMessage", "品物を更新しました！");
 
 		return "redirect:/shokumane/items";
 	}
 
 	@GetMapping("/{id}/consume")
-	public String delete(@PathVariable("id") Integer id) {
+	public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttrs) {
 		foodRepository.deleteById(id);
+		redirectAttrs.addFlashAttribute("successMessage", "品物を消費しました！");
 		return "redirect:/shokumane/items";
 	}
 
+	@PostMapping("/multidelete")
+	public String multidelete(@RequestParam("ids") int[] selectedIds, RedirectAttributes redirectAttrs) {
+
+		for (int id : selectedIds) {
+			foodRepository.deleteById(id);
+		}
+		redirectAttrs.addFlashAttribute("successMessage", "品物を消費しました！");
+		return "redirect:/shokumane/items";
+
+	}
 }
