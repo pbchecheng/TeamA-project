@@ -33,6 +33,8 @@ public class Food {
 	private String memo;
 	@Column(name = "timelimit")
 	private LocalDate timeLimit;
+	@Column(name = "place_id")
+	private Integer placeId;
 	@Column(name = "user_id")
 	private Integer userId;
 
@@ -107,6 +109,14 @@ public class Food {
 
 	public void setTimeLimit(LocalDate timeLimit) {
 		this.timeLimit = timeLimit;
+	}
+
+	public Integer getPlaceId() {
+		return placeId;
+	}
+
+	public void setPlaceId(Integer placeId) {
+		this.placeId = placeId;
 	}
 
 	public Integer getUserId() {

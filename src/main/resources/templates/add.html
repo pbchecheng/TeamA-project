@@ -9,11 +9,13 @@
 	<header th:replace="header"></header>
 	
 	<h2>食品新規登録</h2>
+	<h3 th:text="${place} + ' にものを入りましょう！'"></h3>
 	<ul th:if="${error}">
 		<p th:each="errormsg:${error}" th:text="${errormsg}" style="color: red;"></p>
 	</ul>
 	
 	<form action="/shokumane/add" method="post">
+		<input type="hidden" name="place" th:value="${place}">
 		食品名： <span style="color: red;"> * </span> <input type="text" name="foodName"><br>
 		カテゴリー:
 			<select name="categoryId">
@@ -37,6 +39,7 @@
 		<br>消費・賞味期限:<input type="date" name="timeLimit"><br>
 		<button>登録</button>
 	</form>
+	<a href="/shokumane/items">前の画面に戻る</a>
 	<footer th:replace="footer"></footer>
 </body>
 </html>

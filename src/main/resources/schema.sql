@@ -32,6 +32,7 @@ CREATE TABLE food
    FOREIGN KEY (count_id) REFERENCES counts(id),
    memo TEXT,
    timeLimit DATE,
+   place_id INTEGER,
    user_id INTEGER
 );
 

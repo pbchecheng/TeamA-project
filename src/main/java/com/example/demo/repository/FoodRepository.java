@@ -12,4 +12,8 @@ public interface FoodRepository extends JpaRepository<Food, Integer> {
 
 	List<Food> findByUserIdAndCategoryId(int id, Integer categoryId);
 
+	List<Food> findByUserIdOrderByTimeLimitAsc(int id);
+
+	List<Food> findByUserIdAndCategoryIdOrderByTimeLimitAsc(int id, Integer categoryId);
+
 }

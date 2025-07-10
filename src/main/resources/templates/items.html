@@ -6,17 +6,77 @@
 </head>
 <body>
 	
-	<header th:replace="header"></header>
 	
-	<a href="/shokumane/items">全食品</a>
+	<header th:replace="header"></header>
+	<div id="current_date" style="color: red ;font-size:20px">
+			   	    <script>
+			   	        date = new Date();
+			   	        year = date.getFullYear();
+			   	        month = date.getMonth() + 1;
+			   	        day = date.getDate();
+			   	        document.getElementById("current_date").innerHTML = 
+						"今日の日付：" + year + "-" + month + "-" + day;
+			   	    </script>
+			   	</div>
+				<br>
+	カテゴリー：<a href="/shokumane/items">全食品</a>
 			<a th:each="category:${categories}"
 		       th:href="@{/shokumane/items(categoryId=${category.id})}"
 		       th:text="${category.name}"
 		       style="margin-right: 5px;"></a>
+			   
+			   <form id="sortForm" th:action="@{/shokumane/items}" method="get">
+			      <label>
+					<input type="hidden" name="categoryId" th:value="${categoryId}">
+			        <input type="checkbox" name="asc" th:checked="${asc}==true"
+			               onchange="document.getElementById('sortForm').submit()"/>
+			        消費・賞味期限昇順
+			      </label>
+			    </form>
+				
 	
 	<br>
-	
+	<br>
 	<table border="1">
+		<caption>冷凍庫</caption>
+		
+					<tr>
+						<th>食品名</th>
+						<th>カテゴリー名</th>
+						<th>数量</th>
+						<th>単位</th>
+						<th>memo</th>
+						<th>消費・賞味期限</th>
+						<th>更新</th>
+						<th>消費</th>
+					</tr>
+					<tr th:each="food:${foods2}">
+						<td th:text="${food.foodName}"></td>
+						<td th:text="${food.categoryName}"></td>
+						<td th:text="${food.quantity}"></td>
+						<td th:text="${food.countName}"></td>
+						<td th:text="${food.memo}"></td>
+						<td th:text="${food.timeLimit}"></td>
+						<td>
+							<form th:action="@{/shokumane/{id}/edit(id=${food.id})}" method="get">
+								<button>更新</button>
+							</form>
+						</td>
+						<td>
+							<form th:action="@{/shokumane/{id}/consume(id=${food.id})}" method="get">
+									<button>消費</button>
+								</form>
+												
+						</td>
+					</tr>
+				</table>
+	<br>
+	<form action="/shokumane/add" method="get">
+		<button  type="submit" name="action" value="2">冷凍庫に品物を登録</button>
+	</form>	
+	<br>
+	<table border="1">
+		<caption>冷蔵庫</caption>
 				<tr>
 					<th>食品名</th>
 					<th>カテゴリー名</th>
@@ -27,7 +87,7 @@
 					<th>更新</th>
 					<th>消費</th>
 				</tr>
-				<tr th:each="food:${foods}">
+				<tr th:each="food:${foods1}">
 					<td th:text="${food.foodName}"></td>
 					<td th:text="${food.categoryName}"></td>
 					<td th:text="${food.quantity}"></td>
@@ -50,7 +110,7 @@
 	
 	<br>
 	<form action="/shokumane/add" method="get">
-		<button>品物を登録</button>
+		<button  type="submit" name="action" value="1">冷蔵庫に品物を登録</button>
 	</form>
 	
 	<footer th:replace="footer"></footer>
