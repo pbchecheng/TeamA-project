@@ -52,11 +52,11 @@ public class ItemController {
 
 		if (categoryId == null) {
 
-			foodList = foodRepository.findByUserIdOrderById(account.getId());
+			foodList = foodRepository.findByUserIdOrderByIdDesc(account.getId());
 
 		} else {
 			// itemsテーブルをカテゴリーIDを指定して一覧を取得
-			foodList = foodRepository.findByUserIdAndCategoryId(account.getId(), categoryId);
+			foodList = foodRepository.findByUserIdAndCategoryIdOrderByIdDesc(account.getId(), categoryId);
 
 		}
 
@@ -213,5 +213,36 @@ public class ItemController {
 		redirectAttrs.addFlashAttribute("successMessage", "品物を消費しました！");
 		return "redirect:/shokumane/items";
 
+	}
+
+	@PostMapping("/chillmove")
+	public String chillmove(@RequestParam("ids") int[] selectedIds, RedirectAttributes redirectAttrs) {
+
+		for (int id : selectedIds) {
+
+			Food food = foodRepository.findById(id).get();
+			food.setPlaceId(1);
+			foodRepository.save(food);
+		}
+
+		redirectAttrs.addFlashAttribute("successMessage", "品物を冷蔵庫へ移動しました！");
+		redirectAttrs.addFlashAttribute("warningMessage", "早めに食べましょう！");
+		return "redirect:/shokumane/items";
+	}
+
+	@PostMapping("/freezemove")
+	public String freezemove(@RequestParam("ids") int[] selectedIds, RedirectAttributes redirectAttrs) {
+
+		for (int id : selectedIds) {
+
+			Food food = foodRepository.findById(id).get();
+			food.setPlaceId(2);
+			foodRepository.save(food);
+		}
+
+		redirectAttrs.addFlashAttribute("successMessage", "品物を冷凍庫へ移動しました！");
+		redirectAttrs.addFlashAttribute("warningMessage", "※ 野菜、卵、飲み物など冷凍庫に入れる時に気をつけてください！\r\n"
+				+ "※ 冷凍庫に入れる際は、食材を小分けにして保存しましょう！");
+		return "redirect:/shokumane/items";
 	}
 }

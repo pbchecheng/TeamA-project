@@ -16,6 +16,11 @@
 
 	<h2>食品新規登録</h2>
 	<h3 th:text="${place} + ' にものを入りましょう！'"></h3>
+	<p th:if="${place == '冷凍庫'}" style="color: brown; margin-top: 4px;">
+		※ 野菜、卵、飲み物など冷凍庫に入れる時に気をつけてください！
+		<br>
+		※ 冷凍庫に入れる際は、食材を小分けにして保存しましょう！
+	</p>
 	<ul th:if="${error}">
 			<p th:each="errormsg:${error}" th:text="${errormsg}" style="color: red;"></p>
 		</ul>
