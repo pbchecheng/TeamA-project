@@ -45,7 +45,7 @@ public class UserController {
 		List<User> users = userRepository.findByEmailAndPassword(email, password);
 
 		if (users.size() == 0) {
-			model.addAttribute("message", "メールアドレスとパスワードが一致しませんでした");
+			model.addAttribute("message", "※メールアドレスとパスワードが一致しませんでした");
 			return "login";
 		} else {
 			String name = users.get(0).getName();
@@ -76,28 +76,28 @@ public class UserController {
 		List<String> errorList = new ArrayList<>();
 
 		if (name.length() == 0) {
-			errorList.add("名前は必須です");
+			errorList.add("※名前は必須です");
 		}
 		if (email.length() == 0) {
-			errorList.add("メールアドレスは必須です");
+			errorList.add("※メールアドレスは必須です");
 		}
 		List<User> buf = userRepository.findByEmail(email);
 		// bufに何かデータが入っていれば、emailはでーたべーすに登録済み
 		// List<Customer> bufの長さが０ではなければ、emailはデータベースに登録済み
 		// buf.size()!=0 でなければ、
 		if (email.length() != 0 && buf.size() != 0) {
-			errorList.add("登録済みのメールアドレスです");
+			errorList.add("※登録済みのメールアドレスです");
 		}
 		if (password.length() == 0) {
-			errorList.add("パスワードは必須です");
+			errorList.add("※パスワードは必須です");
 		}
 
 		if (password_confirm.length() == 0) {
-			errorList.add("確認パスワードは必須です");
+			errorList.add("※確認パスワードは必須です");
 		}
 
 		if (!password_confirm.equals(password) && password.length() != 0 && password_confirm.length() != 0) {
-			errorList.add("パスワードと確認パスワードは一致していません");
+			errorList.add("※パスワードと確認パスワードは一致していません");
 		}
 
 		if (errorList.size() > 0) {

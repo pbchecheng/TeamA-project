@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>title</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
+	<div style="background-color: #ffbd59;">
+	<img th:src="@{/images/shokumane.png}" alt="Logo">
 	
-	<h1>食.Mane</h1>
-	<hr>
-	<br>
-		
+	<br><br><br><hr><br>
 	
+	<span th:text="${message}" style="color: red;"></span><br><br>
 	
 	<form action="/shokumane/login" method="post">
-		<input type="text" name="email" placeholder="メールアドレス">
-		<input type="password" name="password" placeholder="パスワード">
+		<input type="text" name="email" placeholder="メールアドレス"><br><br><br>
+		<input type="password" name="password" placeholder="パスワード"><br><br>
 		<button>ログイン</button>
-		<br><span th:text="${message}" style="color: red;"></span>
+		<br>
 	</form>
-	
-	<form action="/shokumane/signup" method="get">
-		<button>新規登録</button>
-	</form>
-	
+	<br><br><br>
+	<a href="/shokumane/signup" method="get">新規登録はこちら</a>
+<!--	<form action="/shokumane/signup" method="get">-->
+<!--		<button>新規登録</button>-->
+<!--	</form>-->
+	<br><br><br>
+	</div>
 	
 	<footer th:replace="footer"></footer>
 </body>

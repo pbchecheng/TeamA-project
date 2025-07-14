@@ -1,0 +1,86 @@
+/* 全体 */
+body {
+/*	background-color:orange;  背景色 */
+	text-align: center; /* 中央寄せ */
+/*    min-width: 900px;  最小幅 */
+}
+
+/* ヘッダー、ナビゲーションメニュー、フッター */
+/*header, nav, footer {*/
+/*	background-color: #45496a;  背景色 */
+/*	color: #ffffff;  文字色 */
+/*	padding-top: 5px;  内側余白(上) */
+/*	padding-bottom: 5px;  内側余白(下) */
+/*}*/
+
+/* ヘッダー、ナビゲーション内リンク */
+/*header a, nav a {*/
+/*	color: #ffffff;*/
+/*}*/
+/* ヘッダー内見出し */
+/*header h1 {*/
+/*	font-size: 20pt;*/
+/*	margin: 10px auto;*/
+/*}*/
+
+
+footer{
+	background-color: #ffbd59;
+	text-align: center; /* 中央寄せ */
+}
+
+/* メイン */
+/*main {*/
+/*	background-color: #FFFFFF;*/
+/*	min-height: 50px;*/
+/*	padding: 20px;*/
+/*}*/
+
+/* Text Box */
+input[type="text"],
+input[type="password"] {
+  width: 300px;    /* 固定宽度 */
+  height: 40px;    /* 固定高度 */
+  padding: 8px 12px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* 仕切り線 */
+hr {
+  margin: 0;
+  border: none;              
+  height: 1px;              
+  background-color: #ccc;    
+}
+
+
+/* 表線 */
+table, th, td {
+	border-collapse: collapse;
+	border: 1px solid #7d8bae;
+}
+/* 表 */
+table {
+    margin: 5px auto;
+    min-width: 800px;
+}
+/* 表見出しセル */
+table th {
+	background: #7d8bae;
+	color: #ffffff;
+}
+/* 送信ボタン */
+button {
+	margin: 2px;
+	padding: 5px 20px;
+	background-color: #b991bf;
+	color: #ffffff;
+	border: 2px solid gray;
+	width:150px;
+	cursor: pointer;
+}
+/* 送信ボタン(マウスオーバー時) */
+button:hover {
+	background-color: #deaee6;
+}
