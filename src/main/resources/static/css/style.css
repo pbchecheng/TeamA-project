@@ -1,10 +1,13 @@
 /* 全体 */
 body {
-/*	background-color:orange;  背景色 */
+	background-color:#ffbd59; /*  背景色 */
 	text-align: center; /* 中央寄せ */
+	color:purple; /* 文字列 */
 /*    min-width: 900px;  最小幅 */
 }
-
+header{
+	color:white;
+}
 /* ヘッダー、ナビゲーションメニュー、フッター */
 /*header, nav, footer {*/
 /*	background-color: #45496a;  背景色 */
@@ -14,9 +17,9 @@ body {
 /*}*/
 
 /* ヘッダー、ナビゲーション内リンク */
-/*header a, nav a {*/
-/*	color: #ffffff;*/
-/*}*/
+body a {
+	color: #ffffff;
+}
 /* ヘッダー内見出し */
 /*header h1 {*/
 /*	font-size: 20pt;*/
@@ -72,30 +75,59 @@ hr {
 /* 表線 */
 table, th, td {
 	border-collapse: collapse;
-	border: 0px solid black;
+	border: 1px solid  #ccc;
 }
+
+/* 表線 */
+table.signuptable {
+  border: 0px solid #000;
+  border-collapse: collapse;
+}
+
+table.signuptable th,
+table.signuptable td {
+  border: 0px solid #000;
+}
+
+
 /* 表 */
 table {
     margin: 5px auto;
     min-width: 500px;
 }
 /* 表見出しセル */
-table th {
+table th ,td{
 /*	background: #7d8bae;*/
-	color: #ffffff;
+	color: purple;
 	font-size: large;
 }
 /* 送信ボタン */
-button {
+button.btn {
 	margin: 2px;
-	padding: 5px 20px;
+	padding: 5px 5px;
 	background-color: #b991bf;
 	color: #ffffff;
-	border: 2px solid gray;
+	border: 0px solid gray;
+	border-radius: 8px;
+	width:50px;
+	cursor: pointer;
+}
+/* 送信ボタン(マウスオーバー時) */
+button.btn:hover {
+	background-color: #deaee6;
+}
+
+button {
+	margin: 2px;
+	padding: 5px 5px;
+	background-color: #588ff5;
+	color: #ffffff;
+	border: 0px solid yellow;
+	border-radius: 8px;
 	width:150px;
 	cursor: pointer;
 }
 /* 送信ボタン(マウスオーバー時) */
 button:hover {
-	background-color: #deaee6;
+	background-color: #92b8fc;
 }

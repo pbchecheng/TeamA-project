@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>title</title>
+    <title>メインページ</title>
 </head>
 <body>
 	
@@ -61,11 +61,11 @@
 				</form>
 				<br>
 
-
+<form id="batchForm1" method="post" >
 	<table border="1">
 		<caption>冷凍庫</caption>
 					<thead>
-					<tr><th><input type="checkbox" id="select-all"></th>
+					<tr><th><input type="checkbox" id="select-all" form="batchForm1"></th>
 						<th>食品名</th>
 						<th>カテゴリー名</th>
 						<th>数量</th>
@@ -79,7 +79,7 @@
 						
 					<tbody>
 					<tr th:each="food:${foods2}">
-						<td><input type="checkbox" class="row-checkbox" name="ids" th:value="${food.id}"></td>
+						<td><input type="checkbox" class="row-checkbox" name="ids" th:value="${food.id}" form="batchForm1"></td>
 						<td th:text="${food.foodName}"></td>
 						<td th:text="${food.categoryName}"></td>
 						<td th:text="${food.quantity}"></td>
@@ -87,16 +87,12 @@
 						<td th:text="${food.memo}"></td>
 						<td class="time-limit" th:text="${food.timeLimit}"></td>
 						<td>
-							<form th:action="@{/shokumane/{id}/edit(id=${food.id})}" method="get">
-								<button>更新</button>
-							</form>
-						</td>
-						<td>
-							<form th:action="@{/shokumane/{id}/consume(id=${food.id})}" method="get">
-									<button>消費</button>
-								</form>
-												
-						</td>
+													<button type="submit" class="btn" form="batchForm1" th:formaction="@{/shokumane/{id}/edit(id=${food.id})}" formmethod="get">更新</button>
+											</td>
+											<td>
+													<button type="submit" class="btn"  form="batchForm1" th:formaction="@{/shokumane/{id}/consume(id=${food.id})}" formmethod="get">消費</button>
+													
+											</td>
 					</tr>
 					</tbody>
 				</table>
@@ -105,21 +101,23 @@
 				      <button type="submit" formaction="/shokumane/chillmove">冷蔵庫へ移動</button>
 				      <button type="submit" formaction="/shokumane/multidelete">消費</button>
 				    </div>
-	
+</form>
+
 	  <br>
 	  
 	<form action="/shokumane/add" method="get">
 		<button  type="submit" name="action" value="2">冷凍庫に品物を登録</button>
 	</form>
-		
+
 <!--冷蔵庫	-->
+
 	<br>
 
-
+	<form id="batchForm" method="post" >
 	<table border="1">
 		<caption>冷蔵庫</caption>
 				<tr>
-					<th><input type="checkbox" id="select-all1"></th>
+					<th><input type="checkbox" id="select-all1" form="batchForm"></th>
 					<th>食品名</th>
 					<th>カテゴリー名</th>
 					<th>数量</th>
@@ -130,7 +128,7 @@
 					<th>消費</th>
 				</tr>
 				<tr th:each="food:${foods1}">
-					<td><input type="checkbox" class="row-checkbox1" name="ids" th:value="${food.id}" ></td>
+					<td><input type="checkbox" class="row-checkbox1" name="ids" th:value="${food.id}" form="batchForm"></td>
 					<td th:text="${food.foodName}"></td>
 					<td th:text="${food.categoryName}"></td>
 					<td th:text="${food.quantity}"></td>
@@ -138,34 +136,31 @@
 					<td th:text="${food.memo}"></td>
 					<td class="time-limit1" th:text="${food.timeLimit}"></td>
 					<td>
-						<form th:action="@{/shokumane/{id}/edit(id=${food.id})}" method="get">
-							<button>更新</button>
-						</form>
+							<button type="submit" class="btn" form="batchForm" th:formaction="@{/shokumane/{id}/edit(id=${food.id})}" formmethod="get">更新</button>
 					</td>
 					<td>
-						<form th:action="@{/shokumane/{id}/consume(id=${food.id})}" method="get">
-								<button>消費</button>
-							</form>
-											
+							<button type="submit" class="btn"  form="batchForm" th:formaction="@{/shokumane/{id}/consume(id=${food.id})}" formmethod="get">消費</button>
+							
 					</td>
 				</tr>
 			</table>
 			
 			<div id="action-buttons1" hidden>
-							      <button type="submit" formaction="/shokumane/freezemove">冷凍庫へ移動</button>
-							      <button type="submit" formaction="/shokumane/multidelete">消費</button>
+							      <button type="submit" formaction="/shokumane/freezemove" formmethod="post">冷凍庫へ移動</button>
+							      <button type="submit" formaction="/shokumane/multidelete" formmethod="post">消費</button>
 							    </div>
-
+	</form>
 	
 	<br>
 	<form action="/shokumane/add" method="get">
 		<button  type="submit" name="action" value="1">冷蔵庫に品物を登録</button>
 	</form>
+
 	<script>
 	    document.addEventListener("DOMContentLoaded", () => {
 	      const now = new Date(); now.setHours(0,0,0,0);
 		    
-	      // 批量选取及按钮控制逻辑
+
 	      function initBatch(selectAllId, rowCheckboxClass, actionButtonsId) {
 	        const selectAll = document.getElementById(selectAllId);
 	        const rowCheckboxes = document.querySelectorAll("." + rowCheckboxClass);

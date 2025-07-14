@@ -121,12 +121,12 @@ public class ItemController {
 	) {
 		List<String> errorList = new ArrayList<>();
 		if (foodName.length() == 0) {
-			errorList.add("食品名は必須です");
+			errorList.add("※食品名は必須です");
 
 		}
 
 		if (quantity == null) {
-			errorList.add("数量は必須です");
+			errorList.add("※数量は必須です");
 
 		}
 

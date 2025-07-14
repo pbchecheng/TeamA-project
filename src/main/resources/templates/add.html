@@ -21,9 +21,11 @@
 		<br>
 		※ 冷凍庫に入れる際は、食材を小分けにして保存しましょう！
 	</p>
-	<ul th:if="${error}">
-			<p th:each="errormsg:${error}" th:text="${errormsg}" style="color: red;"></p>
-		</ul>
+	<ul th:if="${error}" class="error-list">
+						<li th:each="errormsg:${error}" >
+							<span class="error-inline" th:text="${errormsg}" ></span>
+						</li>
+					</ul>	
 		
 	<br>
 	<form action="/shokumane/add" method="post">
@@ -39,7 +41,7 @@
 			</select>
 <!--			&nbsp&nbsp&nbsp&nbspカテゴリー追加：<input type="text" name="newcat">-->
 			<br>
-		数量：<span style="color: red;"> * </span> <input type="number" name="quantity"><br>
+		数量：<span style="color: red;"> * </span> <input type="number" name="quantity">
 		単位:
 			<select name="countId">
 			<option 
