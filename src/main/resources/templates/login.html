@@ -9,12 +9,12 @@
 	<div style="background-color: #ffbd59;">
 	<img th:src="@{/images/shokumane.png}" alt="Logo">
 	
-	<br><br><br><hr><br>
-	
-	<span th:text="${message}" style="color: red;"></span><br><br>
+	<br><br><hr>
+	<h1 style="color: white;">ログイン</h1>
+	<span th:text="${message}" style="color: red;"></span><br>
 	
 	<form action="/shokumane/login" method="post">
-		<input type="text" name="email" placeholder="メールアドレス"><br><br><br>
+		<input type="text" name="email" placeholder="メールアドレス"><br><br>
 		<input type="password" name="password" placeholder="パスワード"><br><br>
 		<button>ログイン</button>
 		<br>
@@ -24,7 +24,7 @@
 <!--	<form action="/shokumane/signup" method="get">-->
 <!--		<button>新規登録</button>-->
 <!--	</form>-->
-	<br><br><br>
+	<br><br><br><br>
 	</div>
 	
 	<footer th:replace="footer"></footer>

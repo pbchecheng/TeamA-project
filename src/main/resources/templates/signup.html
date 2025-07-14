@@ -6,14 +6,18 @@
 </head>
 <body>
 	
-	<h1>食.Mane</h1>
-	<hr>
-	<br>
-	
-    お客様情報
-	<ul th:if="${error}">
-						<p th:each="errormsg:${error}" th:text="${errormsg}" style="color: red;"></p>
-					</ul>
+	<div style="background-color: #ffbd59;">
+		<img th:src="@{/images/shokumane.png}" alt="Logo">
+		
+		<br><br><br><hr>
+
+  <h1 style="color: white;">お客様情報</h1>
+	<ul th:if="${error}" class="error-list">
+						<li th:each="errormsg:${error}" >
+							<span class="error-inline" th:text="${errormsg}" ></span>
+						</li>
+					</ul>			
+					
 			<form action="/shokumane/signup" method="post">
 				<table>
 							<tr>
@@ -29,8 +33,10 @@
 								<th>パスワード再確認</th><td><input type="password" name="password_confirm"></td>
 							</tr>
 						</table>
+						<br>
 				<button>登録</button>
 			</form>	
+			</div>		
 	<footer th:replace="footer"></footer>
 </body>
 </html>

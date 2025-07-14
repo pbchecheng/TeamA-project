@@ -54,21 +54,36 @@ hr {
   background-color: #ccc;    
 }
 
+/*errorList*/
+
+.error-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.error-inline {
+  display: inline-block; 
+  margin-left: 8px;       
+  color: red;
+  font-size: 1 rem;
+}
 
 /* 表線 */
 table, th, td {
 	border-collapse: collapse;
-	border: 1px solid #7d8bae;
+	border: 0px solid black;
 }
 /* 表 */
 table {
     margin: 5px auto;
-    min-width: 800px;
+    min-width: 500px;
 }
 /* 表見出しセル */
 table th {
-	background: #7d8bae;
+/*	background: #7d8bae;*/
 	color: #ffffff;
+	font-size: large;
 }
 /* 送信ボタン */
 button {
