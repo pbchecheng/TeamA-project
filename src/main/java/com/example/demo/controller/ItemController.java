@@ -43,6 +43,7 @@ public class ItemController {
 	public String index(
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
 			@RequestParam(name = "asc", defaultValue = "false") boolean asc,
+			@RequestParam(name = "show", defaultValue = "false") boolean show,
 			Model model) {
 
 		List<Category> categoryList = categoryRepository.findAll();
@@ -76,6 +77,7 @@ public class ItemController {
 			}
 
 		}
+		model.addAttribute("show", show);
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("foods1", foodList1);
 		model.addAttribute("foods2", foodList2);

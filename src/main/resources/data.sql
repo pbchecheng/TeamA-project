@@ -30,7 +30,7 @@ INSERT INTO counts(name) VALUES('杯');
 INSERT INTO counts(name) VALUES('ml');
 
 -- 商品テーブルデータ
-INSERT INTO food(category_id, foodname, quantity, count_id, memo, timelimit, place_id, user_id) VALUES(1, 'パン', 6 ,3,'', '2025-07-12','1','1' );
+INSERT INTO food(category_id, foodname, quantity, count_id, memo, timelimit, place_id, user_id) VALUES(1, 'パン', 6 ,3,'', '2025-07-20','1','1' );
 INSERT INTO food(category_id, foodname, quantity, count_id, memo, timelimit, place_id, user_id) VALUES(2, '鶏肉', 500 ,2,'', '2025-07-08','1','1' );
 INSERT INTO food(category_id, foodname, quantity, count_id, memo, timelimit, place_id, user_id) VALUES(4, '卵', 12 ,4,'', '2025-07-15','1','1' );
 INSERT INTO food(category_id, foodname, quantity, count_id, memo, timelimit, place_id, user_id) VALUES(5, 'レタス', 2 ,5,'', '2025-07-10','1','1' );

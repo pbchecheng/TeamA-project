@@ -32,54 +32,35 @@
 			   	    </script>
 			   	</div>
 				
-<!--				カテゴリー-->
+				<!-- 分类筛选 -->
 				<br>
 				カテゴリー：
-				<th:block th:if="${asc}">
-					<a href="/shokumane/items?asc=on">全食品</a>
+				<a th:href="@{/shokumane/items(asc=${asc}, show=${show})}">全食品</a>
+				<th:block th:each="category : ${categories}">
+				    <a th:href="@{/shokumane/items(categoryId=${category.id}, asc=${asc}, show=${show})}" th:text="${category.name}"></a>
 				</th:block>
-				<th:block th:unless="${asc}">
-					<a href="/shokumane/items">全食品</a>		
-				</th:block>
-				<th:block th:if="${asc}">
-						
-						<a th:each="category:${categories}"
-						       th:href="@{/shokumane/items(categoryId=${category.id},asc='on')}"
-						       th:text="${category.name}"
-						       style="margin-right: 5px;"></a>
-				</th:block>
-				<th:block th:unless="${asc}">
-						<a th:each="category:${categories}"
-						      th:href="@{/shokumane/items(categoryId=${category.id})}"
-						      th:text="${category.name}"
-						      style="margin-right: 5px;"></a>
-				</th:block>
-			   
-<!--				消費・賞味期限昇順-->
 
-			   <form id="sortForm" th:action="@{/shokumane/items}" method="get">
-			      <label>
-					<input type="hidden" name="categoryId" th:value="${categoryId}">
-			        <input type="checkbox" name="asc" th:checked="${asc}==true"
-			               onchange="document.getElementById('sortForm').submit()"/>
-			        消費・賞味期限昇順
-			      </label>
-			    </form>
-				
-<!--				消費期限表示-->
-
-				<form id="showForm" th:action="@{/shokumane/items}" method="get">
-				<label>
-					<input type="hidden" name="food1" th:value="${food1}">
-					<input type="hidden" name="food2" th:value="${food2}">
-					<input type="checkbox" name="show" th:checked="${show}==true"
-							onchange="document.getElementById('showForm').submit()"/>
-					期限切れ・期限近いものをハイライト
-				</label>
+				<!-- 排序功能 -->
+				<form id="sortForm" th:action="@{/shokumane/items}" method="get">
+				    <input type="hidden" name="categoryId" th:value="${categoryId}">
+				    <input type="hidden" name="show" th:value="${show}">
+				    <label>
+				        <input type="checkbox" name="asc" th:checked="${asc}" onchange="document.getElementById('sortForm').submit()" />
+				        消費・賞味期限昇順
+				    </label>
 				</form>
-	<br>
-<!--				冷凍庫-->	
-	
+
+				<!-- 高亮显示过期或即将过期的食品 -->
+				<form id="showForm" th:action="@{/shokumane/items}" method="get">
+				    <input type="hidden" name="categoryId" th:value="${categoryId}">
+					<input type="hidden" name="asc" th:value="${asc}">
+				    <label>
+						<input type="checkbox" id="showHighlight" name="show" th:checked="${show}" onchange="document.getElementById('showForm').submit()" />
+						期限切れ・期限近い食品をハイライト
+				    </label>
+				</form>
+				<br>
+
 	<form id="batchForm" method="post">
 	<table border="1">
 		<caption>冷凍庫</caption>
@@ -104,7 +85,7 @@
 						<td th:text="${food.quantity}"></td>
 						<td th:text="${food.countName}"></td>
 						<td th:text="${food.memo}"></td>
-						<td th:text="${food.timeLimit}"></td>
+						<td class="time-limit" th:text="${food.timeLimit}"></td>
 						<td>
 							<form th:action="@{/shokumane/{id}/edit(id=${food.id})}" method="get">
 								<button>更新</button>
@@ -125,32 +106,6 @@
 				      <button type="submit" formaction="/shokumane/multidelete">消費</button>
 				    </div>
 	</form>		
-					<script>
-					    document.addEventListener("DOMContentLoaded", () => {
-					      const selectAll = document.getElementById("select-all");
-					      const rowCheckboxes = document.querySelectorAll(".row-checkbox");
-					      const actionButtons = document.getElementById("action-buttons");
-
-					      function updateButtons() {
-					        const anyChecked = [...rowCheckboxes].some(cb => cb.checked);
-					        if (anyChecked) {
-					          actionButtons.hidden = false;
-					        } else {
-					          actionButtons.hidden = true;
-					        }
-					        selectAll.checked = [...rowCheckboxes].every(cb => cb.checked);
-					      }
-
-					      selectAll.addEventListener("change", () => {
-					        rowCheckboxes.forEach(cb => cb.checked = selectAll.checked);
-					        updateButtons();
-					      });
-
-					      rowCheckboxes.forEach(cb => {
-					        cb.addEventListener("change", updateButtons);
-					      });
-					    });
-					  </script>		
 	  <br>
 	  
 	<form action="/shokumane/add" method="get">
@@ -181,7 +136,7 @@
 					<td th:text="${food.quantity}"></td>
 					<td th:text="${food.countName}"></td>
 					<td th:text="${food.memo}"></td>
-					<td th:text="${food.timeLimit}"></td>
+					<td class="time-limit1" th:text="${food.timeLimit}"></td>
 					<td>
 						<form th:action="@{/shokumane/{id}/edit(id=${food.id})}" method="get">
 							<button>更新</button>
@@ -202,39 +157,66 @@
 							    </div>
 	</form>
 	
-	<script>
-						    document.addEventListener("DOMContentLoaded", () => {
-						      const selectAll1 = document.getElementById("select-all1");
-						      const rowCheckboxes1 = document.querySelectorAll(".row-checkbox1");
-						      const actionButtons1 = document.getElementById("action-buttons1");
-
-						      function updateButtons() {
-						        const anyChecked = [...rowCheckboxes1].some(cb => cb.checked);
-						        if (anyChecked) {
-						          actionButtons1.hidden = false;
-						        } else {
-						          actionButtons1.hidden = true;
-						        }
-						        selectAll1.checked = [...rowCheckboxes1].every(cb => cb.checked);
-						      }
-
-						      selectAll1.addEventListener("change", () => {
-						        rowCheckboxes1.forEach(cb => cb.checked = selectAll1.checked);
-						        updateButtons();
-						      });
-
-						      rowCheckboxes1.forEach(cb => {
-						        cb.addEventListener("change", updateButtons);
-						      });
-						    });
-						  </script>		
-	
-	
 	<br>
 	<form action="/shokumane/add" method="get">
 		<button  type="submit" name="action" value="1">冷蔵庫に品物を登録</button>
 	</form>
-	
+	<script>
+	    document.addEventListener("DOMContentLoaded", () => {
+	      const now = new Date(); now.setHours(0,0,0,0);
+		    
+	      // 批量选取及按钮控制逻辑
+	      function initBatch(selectAllId, rowCheckboxClass, actionButtonsId) {
+	        const selectAll = document.getElementById(selectAllId);
+	        const rowCheckboxes = document.querySelectorAll("." + rowCheckboxClass);
+	        const actionButtons = document.getElementById(actionButtonsId);
+
+	        function updateButtons() {
+	          const anyChecked = [...rowCheckboxes].some(cb => cb.checked);
+	          actionButtons.hidden = !anyChecked;
+	          selectAll.checked = rowCheckboxes.length > 0 && [...rowCheckboxes].every(cb => cb.checked);
+	        }
+
+	        selectAll.addEventListener("change", () => {
+	          rowCheckboxes.forEach(cb => cb.checked = selectAll.checked);
+	          updateButtons();
+	        });
+	        rowCheckboxes.forEach(cb => cb.addEventListener("change", updateButtons));
+	      }
+	      initBatch("select-all", "row-checkbox", "action-buttons");
+	      initBatch("select-all1", "row-checkbox1", "action-buttons1");
+		  
+			//颜色
+		  
+			const checkbox = document.getElementById('showHighlight');
+			applyOrCleanHighlight(checkbox.checked);
+
+		  		    function applyOrCleanHighlight(apply) {
+		  		      document.querySelectorAll("td.time-limit, td.time-limit1").forEach(td => {
+		  		        const tr = td.parentElement;
+		  		        if (!apply) {
+		  		          tr.style.backgroundColor = ''; // 清除背景
+		  		          return;
+		  		        }
+		  		        const d = new Date(td.textContent.trim());
+		  		        if (isNaN(d)) return;
+		  		        d.setHours(0,0,0,0);
+		  		        const diff = (d - now) / (1000*60*60*24);
+		  		        tr.style.backgroundColor = diff < 0 ? '#f8d7da'
+		  		                              : (diff <= 3 ? '#fff3cd' : '');
+		  		      });
+		  		    }
+
+		  		    // 页面加载时执行一次
+		  		    applyOrCleanHighlight(checkbox.checked);
+
+		  		    // 监听取消/勾选
+		  		    window.toggleHighlight = function(checked) {
+		  		      applyOrCleanHighlight(checked);
+		  		    };
+		  		
+	    });
+	  </script>
 	<footer th:replace="footer"></footer>
 </body>
 </html>
