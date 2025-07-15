@@ -6,10 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-	<div style="background-color: #ffbd59;">
-	<img th:src="@{/images/shokumane.png}" alt="Logo">
-	
-	<br><br><br><hr>
+	<header th:replace="header"></header>
+		<hr>
 	<h1 style="color: white;">ログイン</h1>
 	<span th:text="${message}" style="color: red;"></span><br>
 	

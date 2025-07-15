@@ -6,10 +6,8 @@
 </head>
 <body>
 	
-	<div style="background-color: #ffbd59;">
-		<img th:src="@{/images/shokumane.png}" alt="Logo">
-		
-		<br><br><br><hr>
+	<header th:replace="header"></header>
+		<hr>
 
   <h1 style="color: white;">お客様情報</h1>
 	<ul th:if="${error}" class="error-list">
