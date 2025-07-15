@@ -6,10 +6,8 @@
 
 </head>
 <body>
-
 	<header th:replace="header1"></header>
 	<hr>
-		  
 	<!--	  日付表示-->
 		<div id="current_date" style="color: white ;font-size:20px">
 				   	    <script>
@@ -19,20 +17,18 @@
 				   	        day = date.getDate();
 				   	        document.getElementById("current_date").innerHTML = 
 							"今日の日付：" + year + "-" + month + "-" + day;
-				   	    </script><br><br>
+				   	    </script>
 				   	</div>
 <!--	確認メッセージ-->
 	  <div th:if="${successMessage}" class="alert alert-success">
-	    <span th:text="${successMessage}"></span>
+	    <span th:text="${successMessage}" style="font-size: large; background-color: yellow;"></span>
 	  </div>
 	  
 <!--	提示メッセージ-->	  
 	<div th:if="${warningMessage}" class="alert alert-warning">
-	    <p th:text="${warningMessage}" style="white-space: pre-line; color: brown;"></p>
+	    <p th:text="${warningMessage}" style="white-space: pre-line; color: brown; font-size: large;"></p>
 	  </div>
-	 
 
-	  <br>
 	  				カテゴリー：
 	  				<a th:href="@{/shokumane/items(asc=${asc}, show=${show})}">全食品</a>
 	  				<th:block th:each="category : ${categories}">
