@@ -9,23 +9,10 @@ header{
 	color:white;
 }
 
-/* ヘッダー、ナビゲーションメニュー、フッター */
-/*header, nav, footer {*/
-/*	background-color: #45496a;  背景色 */
-/*	color: #ffffff;  文字色 */
-/*	padding-top: 5px;  内側余白(上) */
-/*	padding-bottom: 5px;  内側余白(下) */
-/*}*/
 
-/* ヘッダー、ナビゲーション内リンク */
 body a {
 	color: #5500ff;
 }
-/* ヘッダー内見出し */
-/*header h1 {*/
-/*	font-size: 20pt;*/
-/*	margin: 10px auto;*/
-/*}*/
 
 
 footer{
@@ -34,12 +21,6 @@ footer{
 	color:#000;
 }
 
-/* メイン */
-/*main {*/
-/*	background-color: #FFFFFF;*/
-/*	min-height: 50px;*/
-/*	padding: 20px;*/
-/*}*/
 
 /* Text Box */
 input[type="text"],
@@ -80,33 +61,6 @@ table, th, td {
 	border: 1px solid  white;
 }
 
-/* 表線 */
-table.signuptable {
-  border: 0px solid #000;
-  border-collapse: collapse;
-/*  min-width: 350px;*/
-}
-
-table.signuptable th,
-table.signuptable td {
-  border: 0px solid #000;
-  width: 100px;
-  
-}
-
-table.posttable {
-  border: 1px solid white;
-  border-collapse: collapse;
-  min-width: 350px;
-}
-
-table.posttable th,
-table.posttable td {
-  border: 1px solid white;
-  
-}
-
-
 /* 表 */
 table {
     margin: 5px auto;
@@ -114,10 +68,42 @@ table {
 }
 /* 表見出しセル */
 table th ,td{
-/*	background: #7d8bae;*/
 	color: #5500ff;
 	font-size: large;
 }
+
+/*dropbox*/
+select {
+  font-size: 14px;           
+  font-family: inherit;   
+
+  width: 100px;            
+  height: 25px;             
+
+}
+/* 他の表 */
+table.signuptable {
+  border: 0px solid #000;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+table.signuptable th,
+table.signuptable td {
+  border: 0px solid #000;
+  width: 200px;
+  
+}
+
+
+table.posttable th,
+table.posttable td {
+
+  height: 40px;
+}
+
+
+
 /* 送信ボタン */
 button.btn {
 	margin: 2px;

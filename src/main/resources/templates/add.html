@@ -26,17 +26,14 @@
 							<span class="error-inline" th:text="${errormsg}" ></span>
 						</li>
 					</ul>	
-		
-	<br>
 	<form action="/shokumane/add" method="post">
 		<input type="hidden" name="place" th:value="${place}">
-		<table class="posttable">
+		<table class="posttable" style="background-color: #f8d7da;">
 		<tr><th>食品名： <span style="color: red;"> * </span></th>
-		<td><input type="text" name="foodName" style="			font: 16px sans-serif;
-			  padding: 3px 2px;width: 200px; height: 10px; 
+		<td><input type="text" name="foodName" style="font: 16px sans-serif;
+			  padding: 3px 2px; width: 200px; height: 20px; 
 			  border: 1px solid #ccc; 
-			  box-sizing: content-box;"></td> 
-			  
+			  box-sizing: content-box;"></td> 	  
 		</tr><tr><th>カテゴリー:</th><td>
 			<select name="categoryId">
 			<option 
@@ -47,7 +44,7 @@
 			</select>
 			</td></tr>
 		<tr><th>数量：<span style="color: red;"> * </span> </th>
-		<td><input type="number" name="quantity"></td>
+		<td><input type="number" name="quantity" style="height: 20px; width: 150px; font: 16px sans-serif;"></td>
 		</tr><tr><th>単位:</th><td>
 			<select name="countId">
 			<option 
@@ -57,15 +54,16 @@
 			</option>
 			</select>
 		</td></tr>
-		<tr><th>memo: </th><td colspan="3">
-		<textarea name="memo" row="4" column="10"></textarea></td></tr>
+		<tr><th>memo: </th><td>
+		<textarea name="memo" cols="25" rows="1"style="font: 16px sans-serif;" ></textarea></td></tr>
 		<tr><th>
-		消費・賞味期限:</th><td colspan="2"><input type="date" name="timeLimit"></td>
+		消費・賞味期限:</th><td colspan="2"><input type="date" name="timeLimit" style="height: 20px;"></td>
 		</tr>
 
 		</table>
 		<button>登録</button>
 	</form>
+	<br>
 	<a href="/shokumane/items">前の画面に戻る</a>
 	<footer th:replace="footer"></footer>
 </body>
