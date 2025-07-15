@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>メインページ</title>
+
 </head>
 <body>
+
+
 	
 	
 	<header th:replace="header"></header>
-	
+
+		  
+	<!--	  日付表示-->
+		<div id="current_date" style="color: white ;font-size:20px">
+				   	    <script>
+				   	        date = new Date();
+				   	        year = date.getFullYear();
+				   	        month = date.getMonth() + 1;
+				   	        day = date.getDate();
+				   	        document.getElementById("current_date").innerHTML = 
+							"今日の日付：" + year + "-" + month + "-" + day;
+				   	    </script><br><br>
+				   	</div>
 <!--	確認メッセージ-->
 	  <div th:if="${successMessage}" class="alert alert-success">
 	    <span th:text="${successMessage}"></span>
@@ -19,28 +34,16 @@
 	    <p th:text="${warningMessage}" style="white-space: pre-line; color: brown;"></p>
 	  </div>
 	 
-	  
-<!--	  日付表示-->
-	<div id="current_date" style="color: red ;font-size:20px">
-			   	    <script>
-			   	        date = new Date();
-			   	        year = date.getFullYear();
-			   	        month = date.getMonth() + 1;
-			   	        day = date.getDate();
-			   	        document.getElementById("current_date").innerHTML = 
-						"今日の日付：" + year + "-" + month + "-" + day;
-			   	    </script>
-			   	</div>
-				
-				<!-- 分类筛选 -->
-				<br>
-				カテゴリー：
-				<a th:href="@{/shokumane/items(asc=${asc}, show=${show})}">全食品</a>
-				<th:block th:each="category : ${categories}">
-				    <a th:href="@{/shokumane/items(categoryId=${category.id}, asc=${asc}, show=${show})}" th:text="${category.name}"></a>
-				</th:block>
 
-				<!-- 排序功能 -->
+	  <br>
+	  				カテゴリー：
+	  				<a th:href="@{/shokumane/items(asc=${asc}, show=${show})}">全食品</a>
+	  				<th:block th:each="category : ${categories}">
+	  				    <a th:href="@{/shokumane/items(categoryId=${category.id}, asc=${asc}, show=${show})}" th:text="${category.name}" 
+						style="	display: inline-block; margin: 0 4px; padding: 4px 0;"></a>
+	  				</th:block>
+
+
 				<form id="sortForm" th:action="@{/shokumane/items}" method="get">
 				    <input type="hidden" name="categoryId" th:value="${categoryId}">
 				    <input type="hidden" name="show" th:value="${show}">
@@ -50,7 +53,7 @@
 				    </label>
 				</form>
 
-				<!-- 高亮显示过期或即将过期的食品 -->
+
 				<form id="showForm" th:action="@{/shokumane/items}" method="get">
 				    <input type="hidden" name="categoryId" th:value="${categoryId}">
 					<input type="hidden" name="asc" th:value="${asc}">
@@ -60,10 +63,10 @@
 				    </label>
 				</form>
 				<br>
-
+<!--冷蔵庫	-->
 <form id="batchForm1" method="post" >
 	<table border="1">
-		<caption>冷凍庫</caption>
+		<caption style="font-size: 1.2rem;">冷凍庫</caption>
 					<thead>
 					<tr><th><input type="checkbox" id="select-all" form="batchForm1"></th>
 						<th>食品名</th>
@@ -115,7 +118,7 @@
 
 	<form id="batchForm" method="post" >
 	<table border="1">
-		<caption>冷蔵庫</caption>
+		<caption style="font-size: 1.2rem;">冷蔵庫</caption>
 				<tr>
 					<th><input type="checkbox" id="select-all1" form="batchForm"></th>
 					<th>食品名</th>
@@ -181,7 +184,7 @@
 	      initBatch("select-all", "row-checkbox", "action-buttons");
 	      initBatch("select-all1", "row-checkbox1", "action-buttons1");
 		  
-			//颜色
+
 		  
 			const checkbox = document.getElementById('showHighlight');
 			applyOrCleanHighlight(checkbox.checked);
@@ -190,22 +193,24 @@
 		  		      document.querySelectorAll("td.time-limit, td.time-limit1").forEach(td => {
 		  		        const tr = td.parentElement;
 		  		        if (!apply) {
-		  		          tr.style.backgroundColor = ''; // 清除背景
+		  		          tr.style.backgroundColor = ''; 
 		  		          return;
 		  		        }
 		  		        const d = new Date(td.textContent.trim());
 		  		        if (isNaN(d)) return;
 		  		        d.setHours(0,0,0,0);
 		  		        const diff = (d - now) / (1000*60*60*24);
-		  		        tr.style.backgroundColor = diff < 0 ? '#f8d7da'
-		  		                              : (diff <= 3 ? '#fff3cd' : '');
+		  		        tr.style.backgroundColor = diff < 0 ? 'rgba(255, 111, 97,0.8)'
+		  		                              : (diff <= 3 ? 'rgba(229, 255, 0,0.8)' : '');
+											  
+											 
 		  		      });
 		  		    }
 
-		  		    // 页面加载时执行一次
+
 		  		    applyOrCleanHighlight(checkbox.checked);
 
-		  		    // 监听取消/勾选
+
 		  		    window.toggleHighlight = function(checked) {
 		  		      applyOrCleanHighlight(checked);
 		  		    };

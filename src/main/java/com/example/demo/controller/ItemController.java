@@ -228,7 +228,7 @@ public class ItemController {
 		}
 
 		redirectAttrs.addFlashAttribute("successMessage", "品物を冷蔵庫へ移動しました！");
-		redirectAttrs.addFlashAttribute("warningMessage", "早めに食べましょう！");
+		redirectAttrs.addFlashAttribute("warningMessage", "※早めに食べましょう！");
 		return "redirect:/shokumane/items";
 	}
 

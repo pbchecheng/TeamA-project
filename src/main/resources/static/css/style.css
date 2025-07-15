@@ -8,6 +8,7 @@ body {
 header{
 	color:white;
 }
+
 /* ヘッダー、ナビゲーションメニュー、フッター */
 /*header, nav, footer {*/
 /*	background-color: #45496a;  背景色 */
@@ -18,7 +19,7 @@ header{
 
 /* ヘッダー、ナビゲーション内リンク */
 body a {
-	color: #ffffff;
+	color: #5500ff;
 }
 /* ヘッダー内見出し */
 /*header h1 {*/
@@ -30,6 +31,7 @@ body a {
 footer{
 	background-color: #ffbd59;
 	text-align: center; /* 中央寄せ */
+	color:#000;
 }
 
 /* メイン */
@@ -75,7 +77,7 @@ hr {
 /* 表線 */
 table, th, td {
 	border-collapse: collapse;
-	border: 1px solid  #ccc;
+	border: 1px solid  white;
 }
 
 /* 表線 */
@@ -98,7 +100,7 @@ table {
 /* 表見出しセル */
 table th ,td{
 /*	background: #7d8bae;*/
-	color: purple;
+	color: #5500ff;
 	font-size: large;
 }
 /* 送信ボタン */
