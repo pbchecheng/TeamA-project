@@ -30,8 +30,14 @@
 	<br>
 	<form action="/shokumane/add" method="post">
 		<input type="hidden" name="place" th:value="${place}">
-		食品名： <span style="color: red;"> * </span> <input type="text" name="foodName"><br>
-		カテゴリー:
+		<table class="posttable">
+		<tr><th>食品名： <span style="color: red;"> * </span></th>
+		<td><input type="text" name="foodName" style="			font: 16px sans-serif;
+			  padding: 3px 2px;width: 200px; height: 10px; 
+			  border: 1px solid #ccc; 
+			  box-sizing: content-box;"></td> 
+			  
+		</tr><tr><th>カテゴリー:</th><td>
 			<select name="categoryId">
 			<option 
 			th:each="category:${categories}"
@@ -39,20 +45,25 @@
 			th:value="${category.id}">
 			</option>
 			</select>
-<!--			&nbsp&nbsp&nbsp&nbspカテゴリー追加：<input type="text" name="newcat">-->
-			<br>
-		数量：<span style="color: red;"> * </span> <input type="number" name="quantity">
-		単位:
+			</td></tr>
+		<tr><th>数量：<span style="color: red;"> * </span> </th>
+		<td><input type="number" name="quantity"></td>
+		</tr><tr><th>単位:</th><td>
 			<select name="countId">
 			<option 
 			th:each="count:${counts}"
 			th:text="${count.name}"
 			th:value="${count.id}">
 			</option>
-			</select><br>
-		memo: 
-		<br><textarea name="memo" row="4" column="10"></textarea>
-		<br>消費・賞味期限:<input type="date" name="timeLimit"><br>
+			</select>
+		</td></tr>
+		<tr><th>memo: </th><td colspan="3">
+		<textarea name="memo" row="4" column="10"></textarea></td></tr>
+		<tr><th>
+		消費・賞味期限:</th><td colspan="2"><input type="date" name="timeLimit"></td>
+		</tr>
+
+		</table>
 		<button>登録</button>
 	</form>
 	<a href="/shokumane/items">前の画面に戻る</a>

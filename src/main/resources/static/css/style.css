@@ -84,11 +84,26 @@ table, th, td {
 table.signuptable {
   border: 0px solid #000;
   border-collapse: collapse;
+/*  min-width: 350px;*/
 }
 
 table.signuptable th,
 table.signuptable td {
   border: 0px solid #000;
+  width: 100px;
+  
+}
+
+table.posttable {
+  border: 1px solid white;
+  border-collapse: collapse;
+  min-width: 350px;
+}
+
+table.posttable th,
+table.posttable td {
+  border: 1px solid white;
+  
 }
 
 
