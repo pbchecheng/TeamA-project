@@ -30,12 +30,33 @@
 	  </div>
 
 	  				カテゴリー：
-	  				<a th:href="@{/shokumane/items(asc=${asc}, show=${show})}">全食品</a>
-	  				<th:block th:each="category : ${categories}">
-	  				    <a th:href="@{/shokumane/items(categoryId=${category.id}, asc=${asc}, show=${show})}" th:text="${category.name}" 
-						style="	display: inline-block; margin: 0 4px; padding: 4px 0;"></a>
-	  				</th:block>
-
+					<img class="icon" th:src="@{/images/主食.png}" alt="Icon">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img class="icon" th:src="@{/images/肉.png}" alt="Icon">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img class="icon" th:src="@{/images/魚.png}" alt="Icon">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img class="icon" th:src="@{/images/卵.png}" alt="Icon">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img class="icon" th:src="@{/images/野菜.png}" alt="Icon">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img class="icon" th:src="@{/images/飲み物.png}" alt="Icon">&nbsp;&nbsp;&nbsp;&nbsp;
+					<img class="icon" th:src="@{/images/その他.png}" alt="Icon"><br>&nbsp;&nbsp;&nbsp;&nbsp;
+					
+	  				<a th:href="@{/shokumane/items(asc=${asc}, show=${show})}" style="padding: 0 5px;">全食品</a>
+	  				<a th:href="@{/shokumane/items(categoryId=1, asc=${asc}, show=${show})}" th:text="主食" style="padding: 0 25px;"></a>
+					<a th:href="@{/shokumane/items(categoryId=2, asc=${asc}, show=${show})}" th:text="肉" style="padding: 0 20px;"></a>
+					<a th:href="@{/shokumane/items(categoryId=3, asc=${asc}, show=${show})}" th:text="魚介" style="padding: 0 25px;"></a>
+					<a th:href="@{/shokumane/items(categoryId=4, asc=${asc}, show=${show})}" th:text="卵" style="padding: 0 15px;"></a>
+					<a th:href="@{/shokumane/items(categoryId=5, asc=${asc}, show=${show})}" th:text="野菜・果物" style="padding: 0 5px;"></a>
+					<a th:href="@{/shokumane/items(categoryId=6, asc=${asc}, show=${show})}" th:text="飲み物"　style="padding: 0 10px;" ></a>
+					<a th:href="@{/shokumane/items(categoryId=7, asc=${asc}, show=${show})}" th:text="その他" ></a>
+					
+					
+					
+					<form id="showForm" th:action="@{/shokumane/items}" method="get">
+								    <input type="hidden" name="categoryId" th:value="${categoryId}">
+									<input type="hidden" name="asc" th:value="${asc}">
+								    <label>
+										<input type="checkbox" id="showHighlight" name="show" th:checked="${show}" onchange="document.getElementById('showForm').submit()" />
+										期限切れ・期限近い食品をハイライト
+								    </label>
+								</form>
 
 				<form id="sortForm" th:action="@{/shokumane/items}" method="get">
 				    <input type="hidden" name="categoryId" th:value="${categoryId}">
@@ -45,16 +66,46 @@
 				        消費・賞味期限昇順
 				    </label>
 				</form>
-
-
-				<form id="showForm" th:action="@{/shokumane/items}" method="get">
-				    <input type="hidden" name="categoryId" th:value="${categoryId}">
-					<input type="hidden" name="asc" th:value="${asc}">
-				    <label>
-						<input type="checkbox" id="showHighlight" name="show" th:checked="${show}" onchange="document.getElementById('showForm').submit()" />
-						期限切れ・期限近い食品をハイライト
-				    </label>
+				
+				<form th:action="@{/shokumane/items}" th:object="${form}" method="get" id="autoForm">
+				  <label>
+				    <input type="checkbox" th:field="*{showText}" onchange="this.form.submit()" />
+				    説明・Tips表示
+				  </label>
 				</form>
+
+				<div style="white-space: pre-line; text-align: left;padding-left: 350px; color: black;"  th:if="${form.showText}">
+					冷凍庫について：
+					・冷凍庫にものを入れる時、メモ機能を活用して、入れる 日付・冷凍期限に記録しよう！
+					・おすすめの冷凍時間：肉（6月）魚（4月）主食（2月）
+					・野菜は下茹でしてから冷凍すると鮮度が保ちやすい
+
+					温度管理について：
+					・冷蔵庫内は2～6℃、冷凍庫は**−18℃以下**が適切温度です 
+
+					賞味期限・在庫管理について：
+					・保存容器や袋に日付と内容をラベリング：常温／冷蔵／冷凍すべてで効果的 
+					・「先入れ先出し」のルールで、古いものを手前に、新しいものを奥へ 
+					・冷蔵庫に「今週使う」「使いかけ」などのゾーンを設置し、見やすく管理 
+
+					清潔・整理について：
+					・冷蔵庫は週1回チェック忘れずに。その都度期限切れや異臭がないか確認
+					・月1回は全面的な掃除を。棚・ドアパッキンもアルコールで拭くと雑菌防止
+					・詰め込みすぎず、冷蔵庫は7割、冷凍庫は詰め過ぎないように（10割でも引き出しの閉まりに注意）
+
+					調理後の取り扱い・再加熱について：
+					・調理後は粗熱を取ってから、浅い密閉容器に入れてすぐ冷蔵／冷凍 
+					・食べる際は中心部までしっかり再加熱、異臭・変色・明らかな傷みがあれば潔く廃棄 
+
+					健康・食品ロス対策について：
+					・買い物前にスマホで庫内写真を撮って在庫確認→重複・無駄買い予防 
+					・使いかけ素材はリメイクを：余り野菜／チーズ／ハムなどをスープやチャーハンに活用 
+
+
+				</div>
+
+
+			
 				<br>
 <!--冷凍庫	-->
 <form id="batchForm1" method="post" >

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -39,11 +40,24 @@ public class ItemController {
 	@Autowired
 	FoodRepository foodRepository;
 
+	public static class MyForm {
+		private boolean showText;
+
+		public boolean isShowText() {
+			return showText;
+		}
+
+		public void setShowText(boolean showText) {
+			this.showText = showText;
+		}
+	}
+
 	@GetMapping("/items")
 	public String index(
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
 			@RequestParam(name = "asc", defaultValue = "false") boolean asc,
 			@RequestParam(name = "show", defaultValue = "false") boolean show,
+			@RequestParam(name = "showText", required = false, defaultValue = "false") boolean showText,
 			Model model) {
 
 		List<Category> categoryList = categoryRepository.findAll();
@@ -77,11 +91,14 @@ public class ItemController {
 			}
 
 		}
+		MyForm form = new MyForm();
+		form.setShowText(showText);
 		model.addAttribute("show", show);
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("foods1", foodList1);
 		model.addAttribute("foods2", foodList2);
 		model.addAttribute("asc", asc);
+		model.addAttribute("form", form);
 		return "items";
 	}
 
@@ -110,7 +127,7 @@ public class ItemController {
 	public String register(
 			@RequestParam(name = "categoryId", defaultValue = "") Integer categoryId,
 			@RequestParam(name = "foodName", defaultValue = "") String foodName,
-			@RequestParam(name = "quantity", defaultValue = "") Integer quantity,
+			@RequestParam(name = "quantity", defaultValue = "", required = false) BigInteger quantity,
 			@RequestParam(name = "countId", defaultValue = "") Integer countId,
 			@RequestParam(name = "memo", defaultValue = "") String memo,
 			@RequestParam(name = "timeLimit", defaultValue = "") LocalDate timeLimit,
@@ -127,7 +144,15 @@ public class ItemController {
 
 		if (quantity == null) {
 			errorList.add("※数量は必須です");
+		} else {
+			BigInteger max = BigInteger.valueOf(Integer.MAX_VALUE);
+			if (quantity.compareTo(max) > 0) {
+				errorList.add("※数量は多すぎです、正しく入力してください");
+			}
 
+			if (quantity.compareTo(BigInteger.ZERO) < 0) {
+				errorList.add("※数量はマイナスです、正しく入力してください");
+			}
 		}
 
 		if (errorList.size() > 0) {
@@ -141,9 +166,8 @@ public class ItemController {
 
 		}
 
-		Food food = new Food(foodName, categoryId, quantity, countId, memo, timeLimit);
+		Food food = new Food(foodName, categoryId, quantity.intValue(), countId, memo, timeLimit);
 		food.setUserId(account.getId());
-		System.out.println(place);
 		if (place.equals("冷凍庫")) {
 			food.setPlaceId(2);
 		} else {

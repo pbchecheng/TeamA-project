@@ -136,7 +136,12 @@ button:hover {
 }
 
 
-img {
+img.shoku {
   width: 75%;
   height: auto;
+}
+
+img.icon {
+ max-width: 4%;
+ max-height: 4%;
 }

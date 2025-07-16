@@ -1,7 +1,7 @@
 <header>
 	<div class="text-area" th:text="${text}">aaa</div>
 	<div style="background-color: #ffbd59;position: relative; display: inline-block;">
-			<img th:src="@{/images/shokumane.png}" alt="Logo">
+			<img class="shoku" th:src="@{/images/shokumane.png}" alt="Logo">
 			<form th:action="@{/shokumane/refresh}" method="post">
 			      <input type="submit" class="refresh-btn" title="なにこれ？">
 			    </form>
